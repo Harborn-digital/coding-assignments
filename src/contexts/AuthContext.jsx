@@ -7,9 +7,7 @@ export const AuthContext = createContext({
 
 export function AuthProvider({ children }) {
   const [userId, setUserId] = useState('12345');
-  const [token, setToken] = useState('mock-token-abc123');
-
-  // In a real app, this would come from login flow
+  const [token, setToken] = useState(null); // TODO: Provide a valid token after user login
 
   return (
     <AuthContext.Provider value={{ userId, token }}>
