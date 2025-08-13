@@ -1,6 +1,6 @@
 # React code structure
 
-Bekijk deze component. Welke verbeteringen zou je voorstellen op het gebied van structuur, herbruikbaarheid en onderhoudbaarheid? Je mag denken aan component splitting, hooks, stijlgebruik, API-laag scheiding, etc. Je hoeft het niet volledig opnieuw te schrijven, maar je mag het wel doen als dat je helpt.
+Bekijk dit component. Welke verbeteringen zou je voorstellen op het gebied van structuur, herbruikbaarheid en onderhoudbaarheid? Je mag denken aan component splitting, hooks, stijlgebruik, API-laag scheiding, etc. Je hoeft het niet volledig opnieuw te schrijven, maar je mag het wel doen als dat je helpt.
 
 ```
 import React, { useState, useEffect } from 'react';
