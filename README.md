@@ -1,7 +1,5 @@
 # FastAPI Clean Architecture – Review Exercise
 
-This repository is a small API for managing users and tasks. It intentionally contains a mix of easy, moderate, and hard issues for a 30-minute review.
-
 Run locally:
 
 ```bash
@@ -24,4 +22,3 @@ Structure roughly follows a clean architecture layering:
 - `api` for transport layer (FastAPI routes)
 - `core` for config and security
 
-A separate `ISSUES.md` lists known problems to spot during review.
