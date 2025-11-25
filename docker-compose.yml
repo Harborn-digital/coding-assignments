@@ -1,0 +1,67 @@
+services:
+  db:
+    image: mysql:8
+    container_name: db
+    expose:
+      - 3306
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root --password=${MYSQL_ROOT_PASSWORD} || exit 1"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  backend:
+    stdin_open: true
+    tty: true
+    container_name: backend
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    env_file:
+      - .env
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+    command: ["uv", "run", "fastapi", "run", "app/src/http_api/main.py", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - ./alembic/versions:/app/alembic/versions
+    develop:
+      watch:
+        - action: sync
+          x-initialSync: true
+          path: .
+          target: /app
+          ignore:
+            - .venv/
+        - action: rebuild
+          path: ./uv.lock
+    build:
+      context: .
+      dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
